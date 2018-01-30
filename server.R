@@ -38,27 +38,13 @@ function(input, output, session) {
   
   solve <- eventReactive(input$Bsolve, {
     
-    p <- prob() 
+    #p <- prob() 
+    p <- problem(pu(), features = input$feat_col, cost_column = input$cost_col)
     
+    p <- p %>% add_min_set_objective()
     #add objective  
-    if (input$objective == "min_set"){
-      p <- p %>% add_min_set_objective()
-      
-    } else if (input$objective == "max_cov"){
-      p <- p %>% add_max_cover_objective(input$budget)
-      
-    } else if (input$objective == "max_feat"){
-      p <- p %>% add_max_features_objective(input$budget)
-      
-    } else if (input$objective == "max_phylo"){
-      p <- p %>% add_max_phylo_objective(input$budget, input$phylo)
-      
-    } else if (input$objective == "max_util"){
-      p <- p %>% add_max_utility_objective(input$budget)
-
-    } else{
       #Throw error or show warning
-    }
+    #}
     
     
     #add targets
